@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import cl.cat2814.a02mvvmexample.R
 import cl.cat2814.a02mvvmexample.databinding.FragmentAddItemBinding
+import cl.cat2814.a02mvvmexample.userInterface.ItemViewModel
 
 class AddItemFragment : Fragment() {
 
 lateinit var binding: FragmentAddItemBinding
+
+private val viewModel: ItemViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,8 +23,22 @@ lateinit var binding: FragmentAddItemBinding
 
         binding = FragmentAddItemBinding.inflate(layoutInflater, container, false)
 
+        initListener()
+
 
         return binding.root
+
+    }
+
+    private fun initListener() {
+        binding.btAddItem.setOnClickListener {
+            val name = binding.etItemName.text.toString()
+            val price = binding.etItemPrice.text.toString().toInt()
+            val quantity = binding.etItemQuantity.text.toString().toInt()
+
+            viewModel.insertItem(name, price, quantity)
+        }
+
 
     }
 }

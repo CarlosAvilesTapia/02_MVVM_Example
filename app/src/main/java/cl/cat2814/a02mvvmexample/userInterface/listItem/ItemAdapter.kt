@@ -22,6 +22,10 @@ class ItemAdapter: RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     }
 
     override fun getItemCount(): Int = items.size
+    fun setData(items: List<ItemEntity>) {
+        this.items = items
+        notifyDataSetChanged()
+    }
 
     inner class ItemViewHolder(val binding: ItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemEntity) {
