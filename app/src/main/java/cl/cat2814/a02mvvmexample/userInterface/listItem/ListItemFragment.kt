@@ -11,14 +11,13 @@ import cl.cat2814.a02mvvmexample.R
 import cl.cat2814.a02mvvmexample.databinding.FragmentListItemBinding
 import cl.cat2814.a02mvvmexample.userInterface.ItemViewModel
 
-
 class ListItemFragment : Fragment() {
 
     private lateinit var binding: FragmentListItemBinding
 
     private val viewModel: ItemViewModel by activityViewModels()
 
-    //private val adapter: ItemAdapter()
+    private val adapter = ItemAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +25,8 @@ class ListItemFragment : Fragment() {
     ): View? {
         binding = FragmentListItemBinding.inflate(inflater, container, false)
 
-       // initRecyclerView()
-        // loadData()
+        initRecyclerView()
+        loadData()
         initListener()
 
         return binding.root
@@ -39,7 +38,7 @@ class ListItemFragment : Fragment() {
         }
     }
 
-    /*private fun loadData() {
+    private fun loadData() {
         viewModel.getAllItems().observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
@@ -47,5 +46,5 @@ class ListItemFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.listItems.adapter = adapter
-    }*/
+    }
 }
