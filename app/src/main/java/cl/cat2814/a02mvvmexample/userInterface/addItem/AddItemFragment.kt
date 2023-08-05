@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,9 +15,9 @@ import cl.cat2814.a02mvvmexample.userInterface.ItemViewModel
 
 class AddItemFragment : Fragment() {
 
-lateinit var binding: FragmentAddItemBinding
+    lateinit var binding: FragmentAddItemBinding
 
-private val viewModel: ItemViewModel by activityViewModels()
+    private val viewModel: ItemViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +28,15 @@ private val viewModel: ItemViewModel by activityViewModels()
 
         initListener()
 
+        showTotalSum()
+
         return binding.root
+    }
+
+    private fun showTotalSum() {
+        viewModel.getAllItems().observe(viewLifecycleOwner) { item ->
+            binding.tvTotalSum.text = viewModel.calculateTotal(item)
+        }
     }
 
     private fun initListener() {
@@ -35,8 +44,6 @@ private val viewModel: ItemViewModel by activityViewModels()
             val name = binding.etItemName.text.toString()
             val price = binding.etItemPrice.text.toString().toInt()
             val quantity = binding.etItemQuantity.text.toString().toInt()
-            val total = (price * quantity)
-            binding.tvTotalSum.text = total.toString()
 
             viewModel.insertItem(name, price, quantity)
 
